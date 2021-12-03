@@ -1,54 +1,33 @@
-# # part 1
-# def createDic(length):
-#     start ={}
-#     index=0
-#     while index<length:
-#         start[index]=0
-#         index+=1
-#     return start
-
-# def getGamma(countZero, length):
-#     gamma=[]
-#     for key in countZero.keys(): 
-#         if countZero[key] > length/2:
-#             gamma.append('0')
-#         else:
-#             gamma.append('1')
-#     return int("".join(gamma),2)
-
-
-# def getEpsilon(countZero, length):
-#     epsilon=[]
-#     for key in countZero.keys(): 
-#         if countZero[key] < length/2:
-#             epsilon.append('0')
-#         else:
-#             epsilon.append('1')
-#     return int("".join(epsilon),2)
-
-
-# with open('input.txt') as f:
-#     data = f.read().splitlines()
-#     countZero = createDic(len(data[0]))
-#     for line in data:
-#         for key in countZero.keys():
-#             if int(line[int(key)]) == 0:
-#                 countZero[key]+=1
-#     gamma = getGamma(countZero, len(data))
-#     epsilon = getEpsilon(countZero, len(data))
-#     print(gamma*epsilon)
-
-#     f.close()
-
-
-## part 2
-
 def getZeroCount(data, position):
     count=0
     for binary in data:
         if binary[position] == '0':
             count+=1
     return count
+
+# part 1
+# with open('input.txt') as f:
+#     data = f.read().splitlines()
+#     gamma=[]
+#     epsilon=[]
+#     index=0
+#     while index < len(data[0]):
+#         if getZeroCount(data, index) > len(data)/2:
+#             gamma.append('0')
+#             epsilon.append('1')
+#         else:
+#             gamma.append('1')
+#             epsilon.append('0')
+#         index+=1
+#     gamma_num = int("".join(gamma),2) 
+#     epsilon_num = int("".join(epsilon),2) 
+#     print(gamma_num*epsilon_num)
+
+#     f.close()
+
+
+## part 2
+
 
 def removeData(data, remove, index):
     array =[]
@@ -83,7 +62,7 @@ def getCO(data):
 
 
 
-with open('input.txt') as f:
+with open('test.txt') as f:
     data = f.read().splitlines()
     oxygen = getOxygen(data)
     co = getCO(data)
