@@ -1,25 +1,29 @@
-# with open('input.txt') as f:
+import sys
+
+check_argv = len(sys.argv)-1
+default = 'test'
+input = sys.argv[1] if check_argv==1 else default
+file_name = f'{input}.txt'
+
+# with open(file_name) as f:
 #     data = f.read().splitlines()
-#     previous_num = 0
-#     positive = -1
-#     for current_line in data:
-#         if int(current_line) > int(previous_num):
+#     positive = 0
+#     for previous_num, current_num in zip(data[::],data[1::]):
+#         if int(current_num) > int(previous_num):
 #             positive+=1
-#         previous_num = current_line
 #     f.close()
 #     print(positive)
 
-with open('input.txt') as f:
+# ## part2
+
+with open(file_name) as f:
     data = f.read().splitlines()
-    array = [int(data.pop(0)),int(data.pop(0)),int(data.pop(0))]
-    previous_sum = sum(array)
-    positive = 0
-    while len(data) > 0:
-        array.pop(0)
-        array.append(int(data.pop(0)))
-        current_sum = sum(array) 
-        if int(current_sum) > previous_sum:
+    positive = -1
+    previous_sum = 0
+    for num_one, num_two, num_thr in zip(data[::],data[1::], data[2::]):
+        current_sum = int(num_one) + int(num_two) + int(num_thr)
+        if current_sum > previous_sum:
             positive+=1
-        previous_sum = current_sum
+        previous_sum=current_sum
     f.close()
     print(positive)
