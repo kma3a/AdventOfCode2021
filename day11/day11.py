@@ -117,6 +117,82 @@ def in_boundary(cord, row_max, column_max):
 
 
 
+                
+### part 1
+
+# def step(cur_data):
+#     flash = []
+#     def inc_data(data):
+#         for r_in, row in enumerate(data):
+#             for c_in, col in enumerate(row):
+#                 new_level = int(col) + 1
+#                 data[r_in][c_in]= new_level
+#                 if check_flash(new_level):
+#                     flash.append([r_in,c_in]) 
+#         return data
+#     # print('inc_data test')
+#     # test1_data = [['0','0','0','0','0'],['0','8','8','8','0'],['0','8','0','8','0'],['0','8','8','8','0'],['0','0','0','0','0']]
+#     # finish1_data = [[1,1,1,1,1],[1,9,9,9,1],[1,9,1,9,1],[1,9,9,9,1],[1,1,1,1,1]]
+#     # print(inc_data(test1_data)== finish1_data)
+#     # print('flash test')
+#     # print(flash == [[1,1],[1,2],[1,3],[2,1],[2,3],[3,1],[3,2],[3,3]])
+#     # test2_data = [[3,4,5,4,3],[4,0,0,0,4],[5,0,0,0,5],[4,0,0,0,4],[3,4,5,4,3]]
+#     # finish2_data = [[4,5,6,5,4],[5,1,1,1,5],[6,1,1,1,6],[5,1,1,1,5],[4,5,6,5,4]]
+#     # flash = []
+#     # print(inc_data(test2_data)== finish2_data)
+#     # print('flash')
+#     # print(flash ==[])
+
+
+#     def flash_change(data):
+#         copy_data = data.copy()
+#         for index, cord in enumerate(flash):
+#             for key in direction.keys():
+#                 check_cord = direction[key](cord)
+#                 if in_boundary(check_cord, len(copy_data), len(copy_data[0])):
+#                     new_level = copy_data[check_cord[0]][check_cord[1]]+1
+#                     copy_data[check_cord[0]][check_cord[1]] = new_level
+#                     if check_flash(new_level) and not check_cord in flash:
+#                         flash.append(check_cord)
+#         for cord in flash:
+#             if copy_data[cord[0]][cord[1]] >=9:
+#                 copy_data[cord[0]][cord[1]] = 0 
+#         return copy_data 
+#     # print('flash test')
+#     # flash = [[1,1],[1,2],[1,3],[2,1],[2,3],[3,1],[3,2],[3,3]]
+#     # test1_data = [[2,2,2,2,2],[2,10,10,10,2],[2,10,2,10,2],[2,10,10,10,2],[2,2,2,2,2]]
+#     # step1_data = [[3,4,5,4,3],[4,0,0,0,4],[5,0,0,0,5],[4,0,0,0,4],[3,4,5,4,3]]
+#     # print(flash_change(test1_data) == step1_data)
+
+#     cur_data = inc_data(cur_data)
+#     final_data = flash_change(cur_data)
+#     flash_count = len(flash)
+#     return [final_data, flash_count]
+# # print('step test')
+# # test1_data = [['1','1','1','1','1'],['1','9','9','9','1'],['1','9','1','9','1'],['1','9','9','9','1'],['1','1','1','1','1']]
+# # finish1_data = [[3,4,5,4,3],[4,0,0,0,4],[5,0,0,0,5],[4,0,0,0,4],[3,4,5,4,3]]
+# # test1_final = step(test1_data)
+# # print(test1_final == finish1_data)
+# # finish2_data = [[4,5,6,5,4],[5,1,1,1,5],[6,1,1,1,6],[5,1,1,1,5],[4,5,6,5,4]]
+# # print(step(test1_final)== finish2_data)
+
+
+# with open(file_name) as f:
+#     data = f.read().splitlines()
+#     split_data = [list(row) for row in data]
+#     step_count =0 
+#     flash_count =0 
+#     while step_count < steps:
+#        step_data = step(split_data)
+#        split_data = step_data[0]
+#        flash_count += step_data[1]
+#        step_count+=1
+#     print(flash_count)
+#     f.close()
+
+
+# ## part 2
+
 def step(cur_data):
     flash = []
     def inc_data(data):
@@ -163,8 +239,8 @@ def step(cur_data):
 
     cur_data = inc_data(cur_data)
     final_data = flash_change(cur_data)
-    flash_count = len(flash)
-    return [final_data, flash_count]
+    have_all_flashed = len(flash) == (len(cur_data[0]) * len(cur_data))
+    return [final_data, have_all_flashed]
 # print('step test')
 # test1_data = [['1','1','1','1','1'],['1','9','9','9','1'],['1','9','1','9','1'],['1','9','9','9','1'],['1','1','1','1','1']]
 # finish1_data = [[3,4,5,4,3],[4,0,0,0,4],[5,0,0,0,5],[4,0,0,0,4],[3,4,5,4,3]]
@@ -172,25 +248,16 @@ def step(cur_data):
 # print(test1_final == finish1_data)
 # finish2_data = [[4,5,6,5,4],[5,1,1,1,5],[6,1,1,1,6],[5,1,1,1,5],[4,5,6,5,4]]
 # print(step(test1_final)== finish2_data)
-                
-### part 1
+
 with open(file_name) as f:
     data = f.read().splitlines()
     split_data = [list(row) for row in data]
-    step_count =0 
-    flash_count =0 
-    while step_count < steps:
+    step_count = 0
+    have_flashed = False
+    while not have_flashed:
        step_data = step(split_data)
        split_data = step_data[0]
-       flash_count += step_data[1]
+       have_flashed = step_data[1] 
        step_count+=1
-    print(flash_count)
+    print(step_count)
     f.close()
-
-
-# ## part 2
-# with open(file_name) as f:
-#     scores = []
-#     data = f.read().splitlines()
-#     f.close())
-
